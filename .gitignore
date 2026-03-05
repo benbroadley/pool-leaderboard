@@ -10,9 +10,6 @@
 .env.local
 .env.*.local
 
-# convex
-/convex/_generated
-
 # misc
 .DS_Store
 *.pem
