@@ -7,16 +7,18 @@ import { usePathname } from "next/navigation";
 interface SiteNavProps {
   onRecordMatch?: () => void;
   onAddPlayer?: () => void;
+  onArchive?: () => void;
 }
 
 const NAV_LINKS = [
   { href: "/", label: "Standings" },
   { href: "/players", label: "Players" },
   { href: "/matchups", label: "Matchups" },
+  { href: "/archives", label: "Archives" },
   { href: "/help", label: "Help" },
 ];
 
-export function SiteNav({ onRecordMatch, onAddPlayer }: SiteNavProps) {
+export function SiteNav({ onRecordMatch, onAddPlayer, onArchive }: SiteNavProps) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -88,8 +90,23 @@ export function SiteNav({ onRecordMatch, onAddPlayer }: SiteNavProps) {
           </div>
 
           {/* Action buttons — desktop */}
-          {(onAddPlayer || onRecordMatch) && (
+          {(onAddPlayer || onRecordMatch || onArchive) && (
             <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
+              {onArchive && (
+                <button
+                  onClick={onArchive}
+                  className="flex items-center gap-1.5 px-3 py-1 text-[11px] tracking-[0.1em] border border-[var(--border-subtle)] text-[var(--chalk-faint)] hover:text-[var(--chalk-dim)] hover:border-[var(--chalk-faint)] rounded-sm transition-colors"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                  title="Archive current standings"
+                >
+                  <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+                    <rect x="1" y="1" width="7" height="2" rx="0.5" stroke="currentColor" strokeWidth="1.1" />
+                    <path d="M1.5 3v4.5h6V3" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
+                    <path d="M3.5 5h2" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
+                  </svg>
+                  Archive
+                </button>
+              )}
               {onAddPlayer && (
                 <button
                   onClick={onAddPlayer}
@@ -180,11 +197,20 @@ export function SiteNav({ onRecordMatch, onAddPlayer }: SiteNavProps) {
               })}
             </div>
 
-            {(onAddPlayer || onRecordMatch) && (
+            {(onAddPlayer || onRecordMatch || onArchive) && (
               <div
-                className="px-3 py-3 flex gap-2"
+                className="px-3 py-3 flex flex-wrap gap-2"
                 style={{ borderTop: "1px solid var(--border-subtle)" }}
               >
+                {onArchive && (
+                  <button
+                    onClick={() => { setMenuOpen(false); onArchive(); }}
+                    className="flex-1 py-3 text-xs border border-[var(--border-subtle)] text-[var(--chalk-faint)] hover:text-[var(--chalk-dim)] rounded-sm transition-colors"
+                    style={{ fontFamily: "var(--font-mono)", letterSpacing: "0.08em" }}
+                  >
+                    Archive
+                  </button>
+                )}
                 {onAddPlayer && (
                   <button
                     onClick={() => { setMenuOpen(false); onAddPlayer(); }}

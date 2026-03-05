@@ -5,11 +5,13 @@ import { Leaderboard } from "@/components/Leaderboard";
 import { MatchHistory } from "@/components/MatchHistory";
 import { AddPlayerModal } from "@/components/AddPlayerModal";
 import { RecordMatchModal } from "@/components/RecordMatchModal";
+import { ArchiveModal } from "@/components/ArchiveModal";
 import { SiteNav } from "@/components/SiteNav";
 
 export default function Home() {
   const [showAddPlayer, setShowAddPlayer] = useState(false);
   const [showRecordMatch, setShowRecordMatch] = useState(false);
+  const [showArchive, setShowArchive] = useState(false);
   const [activeTab, setActiveTab] = useState<"leaderboard" | "history">("leaderboard");
 
   return (
@@ -17,6 +19,7 @@ export default function Home() {
       <SiteNav
         onRecordMatch={() => setShowRecordMatch(true)}
         onAddPlayer={() => setShowAddPlayer(true)}
+        onArchive={() => setShowArchive(true)}
       />
 
       {/* Header */}
@@ -67,6 +70,9 @@ export default function Home() {
       )}
       {showRecordMatch && (
         <RecordMatchModal onClose={() => setShowRecordMatch(false)} />
+      )}
+      {showArchive && (
+        <ArchiveModal onClose={() => setShowArchive(false)} />
       )}
     </main>
   );

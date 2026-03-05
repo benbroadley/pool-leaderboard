@@ -15,6 +15,21 @@ export default defineSchema({
     .index("by_elo", ["elo"])
     .index("by_name", ["name"]),
 
+  archives: defineTable({
+    name: v.string(),
+    matchCount: v.number(),
+    entries: v.array(
+      v.object({
+        rank: v.number(),
+        name: v.string(),
+        elo: v.number(),
+        wins: v.number(),
+        losses: v.number(),
+        avatarColor: v.string(),
+      })
+    ),
+  }),
+
   matches: defineTable({
     player1Id: v.id("players"),
     player2Id: v.id("players"),
