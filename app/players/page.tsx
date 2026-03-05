@@ -343,7 +343,7 @@ export default function PlayersPage() {
           <div className="flex items-center gap-3">
             <span className="text-3xl md:text-4xl">🎱</span>
             <h1
-              className="text-4xl md:text-6xl lg:text-7xl text-[var(--gold)] leading-none tracking-wider"
+              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-[var(--gold)] leading-none tracking-wider"
               style={{ fontFamily: "var(--font-display)" }}
             >
               PLAYERS

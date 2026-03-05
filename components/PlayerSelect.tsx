@@ -39,7 +39,6 @@ export function PlayerSelect({
       p.name.toLowerCase().includes(query.toLowerCase())
   );
 
-  // Close on outside click
   useEffect(() => {
     function handler(e: MouseEvent) {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
@@ -69,7 +68,7 @@ export function PlayerSelect({
       <button
         type="button"
         onClick={open ? () => { setOpen(false); setQuery(""); } : handleOpen}
-        className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-sm border transition-all text-left"
+        className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-sm border transition-all text-left min-w-0"
         style={{
           background: "var(--bg-raised)",
           borderColor: open ? "var(--gold)" : "var(--border-subtle)",
@@ -78,13 +77,18 @@ export function PlayerSelect({
       >
         {selected ? (
           <>
-            <PlayerAvatar name={selected.name} color={selected.avatarColor} avatarUrl={selected.avatarUrl} size={28} />
-            <span className="flex-1 text-sm truncate" style={{ fontFamily: "var(--font-body)", color: "var(--chalk)" }}>
-              {selected.name}
-            </span>
-            <span className="text-xs tabular-nums flex-shrink-0" style={{ fontFamily: "var(--font-mono)", color: "var(--gold)" }}>
-              {selected.elo}
-            </span>
+            <div className="flex-shrink-0">
+              <PlayerAvatar name={selected.name} color={selected.avatarColor} avatarUrl={selected.avatarUrl} size={28} />
+            </div>
+            {/* Name stacked above ELO — no truncation */}
+            <div className="flex-1 min-w-0">
+              <div className="text-sm leading-snug" style={{ fontFamily: "var(--font-body)", color: "var(--chalk)", wordBreak: "break-word" }}>
+                {selected.name}
+              </div>
+              <div className="text-xs tabular-nums mt-0.5" style={{ fontFamily: "var(--font-mono)", color: "var(--gold)" }}>
+                {selected.elo}
+              </div>
+            </div>
           </>
         ) : (
           <>
@@ -99,7 +103,7 @@ export function PlayerSelect({
           height="12"
           viewBox="0 0 12 12"
           fill="none"
-          className="flex-shrink-0 transition-transform duration-200"
+          className="flex-shrink-0 transition-transform duration-200 ml-1"
           style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)", color: "var(--chalk-faint)" }}
         >
           <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -143,7 +147,7 @@ export function PlayerSelect({
           </div>
 
           {/* Options */}
-          <div className="max-h-48 overflow-y-auto">
+          <div className="max-h-52 overflow-y-auto">
             {filtered.length === 0 ? (
               <div
                 className="px-4 py-3 text-sm text-center"
@@ -159,7 +163,7 @@ export function PlayerSelect({
                     key={player._id}
                     type="button"
                     onClick={() => handleSelect(player._id)}
-                    className="w-full flex items-center gap-2.5 px-3 py-2.5 transition-colors text-left"
+                    className="w-full flex items-center gap-2.5 px-3 py-2.5 transition-colors text-left min-w-0"
                     style={{
                       background: isSelected ? "var(--gold-dim)" : "transparent",
                     }}
@@ -170,19 +174,24 @@ export function PlayerSelect({
                       if (!isSelected) (e.currentTarget as HTMLElement).style.background = "transparent";
                     }}
                   >
-                    <PlayerAvatar name={player.name} color={player.avatarColor} avatarUrl={player.avatarUrl} size={28} />
-                    <span
-                      className="flex-1 text-sm truncate"
-                      style={{ fontFamily: "var(--font-body)", color: isSelected ? "var(--gold)" : "var(--chalk)" }}
-                    >
-                      {player.name}
-                    </span>
-                    <span
-                      className="text-xs tabular-nums flex-shrink-0"
-                      style={{ fontFamily: "var(--font-mono)", color: isSelected ? "var(--gold)" : "var(--chalk-faint)" }}
-                    >
-                      {player.elo}
-                    </span>
+                    <div className="flex-shrink-0">
+                      <PlayerAvatar name={player.name} color={player.avatarColor} avatarUrl={player.avatarUrl} size={28} />
+                    </div>
+                    {/* Name stacked above ELO — no truncation */}
+                    <div className="flex-1 min-w-0">
+                      <div
+                        className="text-sm leading-snug"
+                        style={{ fontFamily: "var(--font-body)", color: isSelected ? "var(--gold)" : "var(--chalk)", wordBreak: "break-word" }}
+                      >
+                        {player.name}
+                      </div>
+                      <div
+                        className="text-xs tabular-nums mt-0.5"
+                        style={{ fontFamily: "var(--font-mono)", color: isSelected ? "var(--gold)" : "var(--chalk-faint)", opacity: isSelected ? 0.8 : 1 }}
+                      >
+                        {player.elo}
+                      </div>
+                    </div>
                     {isSelected && (
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ color: "var(--gold)", flexShrink: 0 }}>
                         <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

@@ -123,8 +123,8 @@ export function RecordMatchModal({ onClose, initialPlayer1Id, initialPlayer2Id }
               </p>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
-                {/* VS layout */}
-                <div className="grid grid-cols-[1fr_auto_1fr] gap-3 items-start">
+                {/* Player selects — stacked on mobile, side-by-side on sm+ */}
+                <div className="flex flex-col sm:grid sm:grid-cols-[1fr_auto_1fr] gap-3 items-stretch sm:items-start">
                   {/* Player 1 */}
                   <div>
                     <label
@@ -142,12 +142,16 @@ export function RecordMatchModal({ onClose, initialPlayer1Id, initialPlayer2Id }
                     />
                   </div>
 
-                  {/* VS */}
-                  <div
-                    className="text-[var(--chalk-faint)] text-xl pt-7 text-center"
-                    style={{ fontFamily: "var(--font-display)", letterSpacing: "0.1em" }}
-                  >
-                    VS
+                  {/* VS — horizontal rule on mobile, vertical label on sm+ */}
+                  <div className="flex sm:block items-center gap-3 sm:pt-7">
+                    <div className="flex-1 sm:hidden h-px bg-[var(--border-subtle)]" />
+                    <span
+                      className="text-[var(--chalk-faint)] text-base sm:text-xl text-center flex-shrink-0"
+                      style={{ fontFamily: "var(--font-display)", letterSpacing: "0.1em" }}
+                    >
+                      VS
+                    </span>
+                    <div className="flex-1 sm:hidden h-px bg-[var(--border-subtle)]" />
                   </div>
 
                   {/* Player 2 */}
@@ -198,14 +202,17 @@ export function RecordMatchModal({ onClose, initialPlayer1Id, initialPlayer2Id }
                                 : "border-[var(--border-subtle)] hover:border-[var(--chalk-faint)]"
                             }`}
                           >
+                            {isSelected && (
+                              <div className="text-base mb-1 leading-none">🏆</div>
+                            )}
                             <div
-                              className="font-medium text-sm truncate"
+                              className="font-medium text-sm leading-snug"
                               style={{
                                 fontFamily: "var(--font-body)",
                                 color: isSelected ? "var(--gold)" : "var(--chalk-dim)",
+                                wordBreak: "break-word",
                               }}
                             >
-                              {isSelected && "🏆 "}
                               {player.name}
                             </div>
                             {change !== null && (

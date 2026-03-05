@@ -25,7 +25,7 @@ export default function Home() {
           <div className="flex items-center gap-3 mb-6">
             <span className="text-3xl md:text-4xl">🎱</span>
             <h1
-              className="text-4xl md:text-6xl lg:text-7xl text-[var(--gold)] leading-none tracking-wider whitespace-nowrap"
+              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-[var(--gold)] leading-none tracking-wider"
               style={{ fontFamily: "var(--font-display)" }}
             >
               POOL LEADERBOARD

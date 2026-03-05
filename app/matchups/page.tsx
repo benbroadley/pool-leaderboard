@@ -76,7 +76,7 @@ export default function MatchupsPage() {
           <div className="flex items-center gap-3">
             <span className="text-3xl md:text-4xl">🎱</span>
             <h1
-              className="text-4xl md:text-6xl lg:text-7xl text-[var(--gold)] leading-none tracking-wider"
+              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-[var(--gold)] leading-none tracking-wider"
               style={{ fontFamily: "var(--font-display)" }}
             >
               MATCHUPS
@@ -127,23 +127,34 @@ export default function MatchupsPage() {
           <>
             {/* Matrix */}
             <div>
-              <h2
-                className="text-xs uppercase tracking-widest text-[var(--chalk-faint)] mb-4"
-                style={{ fontFamily: "var(--font-mono)" }}
-              >
-                Head-to-Head Matrix
-              </h2>
-              <div className="overflow-x-auto">
-                <table className="border-collapse" style={{ minWidth: "100%" }}>
+              <div className="flex items-center justify-between mb-4">
+                <h2
+                  className="text-xs uppercase tracking-widest text-[var(--chalk-faint)]"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  Head-to-Head Matrix
+                </h2>
+                <span
+                  className="sm:hidden text-[10px] text-[var(--chalk-faint)] flex items-center gap-1"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  scroll
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                    <path d="M2 5h6M5.5 2.5L8 5l-2.5 2.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
+              </div>
+              <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+                <table className="border-collapse" style={{ minWidth: "max-content" }}>
                   <thead>
                     <tr>
                       {/* Empty corner */}
-                      <th className="p-0" style={{ minWidth: "140px" }} />
+                      <th className="p-0" style={{ minWidth: "100px" }} />
                       {activePlayers.map((col) => (
                         <th
                           key={col._id}
-                          className="pb-2 px-1 text-center"
-                          style={{ minWidth: "72px", maxWidth: "72px" }}
+                          className="pb-2 px-0.5 text-center"
+                          style={{ minWidth: "60px", maxWidth: "60px" }}
                         >
                           <div className="flex flex-col items-center gap-1">
                             <PlayerAvatar
@@ -153,11 +164,11 @@ export default function MatchupsPage() {
                               size={28}
                             />
                             <span
-                              className="text-xs text-[var(--chalk-faint)] truncate w-full text-center block"
-                              style={{ fontFamily: "var(--font-mono)", maxWidth: "68px" }}
+                              className="text-[10px] text-[var(--chalk-faint)] truncate w-full text-center block"
+                              style={{ fontFamily: "var(--font-mono)", maxWidth: "56px" }}
                               title={col.name}
                             >
-                              {col.name.length > 8 ? col.name.slice(0, 7) + "…" : col.name}
+                              {col.name.length > 7 ? col.name.slice(0, 6) + "…" : col.name}
                             </span>
                           </div>
                         </th>
@@ -168,17 +179,17 @@ export default function MatchupsPage() {
                     {activePlayers.map((row) => (
                       <tr key={row._id}>
                         {/* Row header */}
-                        <td className="pr-3 py-1">
-                          <div className="flex items-center gap-2">
+                        <td className="pr-2 py-0.5">
+                          <div className="flex items-center gap-1.5" style={{ minWidth: "100px" }}>
                             <PlayerAvatar
                               name={row.name}
                               color={row.avatarColor}
                               avatarUrl={row.avatarUrl}
-                              size={24}
+                              size={20}
                             />
                             <span
-                              className="text-sm text-[var(--chalk-dim)] truncate"
-                              style={{ fontFamily: "var(--font-body)", maxWidth: "100px" }}
+                              className="text-xs text-[var(--chalk-dim)] truncate"
+                              style={{ fontFamily: "var(--font-body)", maxWidth: "72px" }}
                               title={row.name}
                             >
                               {row.name}
@@ -191,9 +202,9 @@ export default function MatchupsPage() {
                           if (row._id === col._id) {
                             // Diagonal
                             return (
-                              <td key={col._id} className="p-1 text-center">
+                              <td key={col._id} className="p-0.5 text-center">
                                 <div
-                                  className="w-full h-14 flex items-center justify-center rounded-sm"
+                                  className="w-full h-12 flex items-center justify-center rounded-sm"
                                   style={{ background: "rgba(255,255,255,0.02)" }}
                                 >
                                   <span
@@ -212,10 +223,10 @@ export default function MatchupsPage() {
                           if (!m) {
                             // Unplayed
                             return (
-                              <td key={col._id} className="p-1 text-center">
+                              <td key={col._id} className="p-0.5 text-center">
                                 <button
                                   onClick={() => setModalPlayers({ p1: row._id, p2: col._id })}
-                                  className="w-full h-14 flex items-center justify-center rounded-sm transition-all hover:scale-[1.04] active:scale-[0.97] group"
+                                  className="w-full h-12 flex items-center justify-center rounded-sm transition-all hover:scale-[1.04] active:scale-[0.97] group"
                                   style={{
                                     background: "rgba(201,168,76,0.06)",
                                     border: "1px dashed rgba(201,168,76,0.3)",
@@ -244,10 +255,10 @@ export default function MatchupsPage() {
                           const isBehind = rowWins < colWins;
 
                           return (
-                            <td key={col._id} className="p-1 text-center">
+                            <td key={col._id} className="p-0.5 text-center">
                               <button
                                 onClick={() => setModalPlayers({ p1: row._id, p2: col._id })}
-                                className="w-full h-14 flex flex-col items-center justify-center rounded-sm transition-all hover:scale-[1.04] active:scale-[0.97] group"
+                                className="w-full h-12 flex flex-col items-center justify-center rounded-sm transition-all hover:scale-[1.04] active:scale-[0.97] group"
                                 style={{
                                   background: isAhead
                                     ? "rgba(74,158,120,0.12)"
